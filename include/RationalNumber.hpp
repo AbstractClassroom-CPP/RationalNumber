@@ -16,6 +16,7 @@ public:
 	RationalNumber();
 	int getNumerator() const;
 	int getDenominator() const;
+	RationalNumber(int value);
 
 private:
 

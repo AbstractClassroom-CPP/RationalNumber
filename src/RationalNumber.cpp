@@ -12,3 +12,8 @@ int RationalNumber::getNumerator() const {
 int RationalNumber::getDenominator() const {
 	return denominator_;
 }
+
+RationalNumber::RationalNumber(int value) {
+	numerator_ = value;
+	denominator_ = 1;
+}
