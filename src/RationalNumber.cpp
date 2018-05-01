@@ -17,3 +17,14 @@ RationalNumber::RationalNumber(int value) {
 	numerator_ = value;
 	denominator_ = 1;
 }
+
+RationalNumber::RationalNumber(const RationalNumber& other) {
+	numerator_ = other.numerator_;
+	denominator_ = other.denominator_;
+}
+
+RationalNumber& RationalNumber::operator=(const RationalNumber& other) {
+	numerator_ = other.numerator_;
+	denominator_ = other.denominator_;
+	return *this;
+}

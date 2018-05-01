@@ -17,6 +17,8 @@ public:
 	int getNumerator() const;
 	int getDenominator() const;
 	RationalNumber(int value);
+	RationalNumber(const RationalNumber& other);
+	RationalNumber& operator=(const RationalNumber& other);
 
 private:
 
