@@ -28,3 +28,7 @@ RationalNumber& RationalNumber::operator=(const RationalNumber& other) {
 	denominator_ = other.denominator_;
 	return *this;
 }
+
+RationalNumber::RationalNumber(int numerator, int denominator) {
+	setValues(Wide(numerator), Wide(denominator));
+}

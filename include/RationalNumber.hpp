@@ -19,11 +19,48 @@ public:
 	RationalNumber(int value);
 	RationalNumber(const RationalNumber& other);
 	RationalNumber& operator=(const RationalNumber& other);
+	RationalNumber(int numerator, int denominator);
 
 private:
 
 	int numerator_;
 	int denominator_;
+
+	static int narrow(Wide value) {
+		if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max()) {
+			throw std::overflow_error("Rational number does not fit in int");
+		}
+		return static_cast<int>(value);
+	}
+
+	void setValues(Wide n, Wide d) {
+		if (d == 0) {
+			throw std::domain_error("Denominator cannot be zero");
+		}
+		if (n == 0) {
+			d = 1;
+		}
+		if (d < 0) {
+			n = -n;
+			d = -d;
+		}
+		Wide a = n;
+		if (a < 0) {
+			a = -a;
+		}
+		Wide b = d;
+		while (b != 0) {
+			Wide remainder = a % b;
+			a = b;
+			b = remainder;
+		}
+		n /= a;
+		d /= a;
+		int numerator = narrow(n);
+		int denominator = narrow(d);
+		numerator_ = numerator;
+		denominator_ = denominator;
+	}
 
 };
 
