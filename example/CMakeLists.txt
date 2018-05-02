@@ -1,0 +1,2 @@
+add_executable(rational_number_example main.cpp)
+target_link_libraries(rational_number_example PRIVATE RationalNumber::RationalNumber)

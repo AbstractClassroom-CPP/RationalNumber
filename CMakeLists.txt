@@ -16,6 +16,12 @@ if(rational_number_top_level)
 	include(CTest)
 endif()
 
+option(RATIONAL_NUMBER_BUILD_EXAMPLE "Build the examples" ${rational_number_top_level})
+
+if(RATIONAL_NUMBER_BUILD_EXAMPLE)
+	add_subdirectory(example)
+endif()
+
 if(rational_number_top_level AND BUILD_TESTING)
 	add_subdirectory(test)
 endif()
