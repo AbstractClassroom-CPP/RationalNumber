@@ -20,6 +20,8 @@ public:
 	RationalNumber(const RationalNumber& other);
 	RationalNumber& operator=(const RationalNumber& other);
 	RationalNumber(int numerator, int denominator);
+	bool isZero() const;
+	bool isInteger() const;
 
 private:
 

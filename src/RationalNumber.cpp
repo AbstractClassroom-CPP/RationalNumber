@@ -32,3 +32,11 @@ RationalNumber& RationalNumber::operator=(const RationalNumber& other) {
 RationalNumber::RationalNumber(int numerator, int denominator) {
 	setValues(Wide(numerator), Wide(denominator));
 }
+
+bool RationalNumber::isZero() const {
+	return numerator_ == 0;
+}
+
+bool RationalNumber::isInteger() const {
+	return denominator_ == 1;
+}
