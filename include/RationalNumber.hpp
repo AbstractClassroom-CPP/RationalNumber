@@ -22,6 +22,7 @@ public:
 	RationalNumber(int numerator, int denominator);
 	bool isZero() const;
 	bool isInteger() const;
+	double getDoubleApprox() const;
 
 private:
 

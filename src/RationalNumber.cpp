@@ -40,3 +40,7 @@ bool RationalNumber::isZero() const {
 bool RationalNumber::isInteger() const {
 	return denominator_ == 1;
 }
+
+double RationalNumber::getDoubleApprox() const {
+	return static_cast<double>(numerator_) / static_cast<double>(denominator_);
+}
