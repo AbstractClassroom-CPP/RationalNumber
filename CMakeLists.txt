@@ -11,3 +11,11 @@ set(rational_number_top_level OFF)
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 	set(rational_number_top_level ON)
 endif()
+
+if(rational_number_top_level)
+	include(CTest)
+endif()
+
+if(rational_number_top_level AND BUILD_TESTING)
+	add_subdirectory(test)
+endif()

@@ -1,0 +1,3 @@
+add_executable(rational_number_checks checks.cpp)
+target_link_libraries(rational_number_checks PRIVATE RationalNumber::RationalNumber)
+add_test(NAME rational_number_checks COMMAND rational_number_checks)
