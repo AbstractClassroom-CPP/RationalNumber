@@ -50,3 +50,9 @@ RationalNumber& RationalNumber::operator+=(const RationalNumber& other) {
 	Wide(denominator_) * Wide(other.denominator_));
 	return *this;
 }
+
+RationalNumber& RationalNumber::operator-=(const RationalNumber& other) {
+	setValues(Wide(numerator_) * Wide(other.denominator_) - Wide(other.numerator_) * Wide(denominator_),
+	Wide(denominator_) * Wide(other.denominator_));
+	return *this;
+}
