@@ -23,6 +23,7 @@ public:
 	bool isZero() const;
 	bool isInteger() const;
 	double getDoubleApprox() const;
+	RationalNumber& operator+=(const RationalNumber& other);
 
 private:
 

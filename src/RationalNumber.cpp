@@ -44,3 +44,9 @@ bool RationalNumber::isInteger() const {
 double RationalNumber::getDoubleApprox() const {
 	return static_cast<double>(numerator_) / static_cast<double>(denominator_);
 }
+
+RationalNumber& RationalNumber::operator+=(const RationalNumber& other) {
+	setValues(Wide(numerator_) * Wide(other.denominator_) + Wide(other.numerator_) * Wide(denominator_),
+	Wide(denominator_) * Wide(other.denominator_));
+	return *this;
+}
