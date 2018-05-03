@@ -38,8 +38,14 @@ void Addition() {
 	check((2 + RationalNumber(1, 2)).getNumerator() == 5);
 }
 
+void Subtraction() {
+	check((RationalNumber(1, 2) - RationalNumber(1, 2)).isZero());
+	check((3 - RationalNumber(1, 2)).getNumerator() == 5);
+}
+
 int main() {
 	Normalization();
 	Addition();
+	Subtraction();
 	return 0;
 }
