@@ -25,6 +25,11 @@ public:
 	double getDoubleApprox() const;
 	RationalNumber& operator+=(const RationalNumber& other);
 
+	friend RationalNumber operator+(RationalNumber left, const RationalNumber& right) {
+		left += right;
+		return left;
+	}
+
 private:
 
 	int numerator_;

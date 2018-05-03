@@ -32,7 +32,14 @@ void Normalization() {
 	check(rejected);
 }
 
+void Addition() {
+	check((RationalNumber(1, 6) + RationalNumber(1, 3)).getNumerator() == 1);
+	check((RationalNumber(1, 6) + RationalNumber(1, 3)).getDenominator() == 2);
+	check((2 + RationalNumber(1, 2)).getNumerator() == 5);
+}
+
 int main() {
 	Normalization();
+	Addition();
 	return 0;
 }
