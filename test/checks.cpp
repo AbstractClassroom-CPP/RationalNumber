@@ -43,9 +43,18 @@ void Subtraction() {
 	check((3 - RationalNumber(1, 2)).getNumerator() == 5);
 }
 
+void NativeLimits() {
+	check(RationalNumber(INT_MIN, INT_MIN) == 1);
+	check(RationalNumber(INT_MIN, 2).getNumerator() == INT_MIN / 2);
+	check(RationalNumber(0, INT_MIN) == 0);
+	check(RationalNumber(INT_MAX, 2) + RationalNumber(INT_MAX, 2) == INT_MAX);
+	check(RationalNumber(INT_MIN, 2) + RationalNumber(INT_MIN, 2) == INT_MIN);
+}
+
 int main() {
 	Normalization();
 	Addition();
 	Subtraction();
+	NativeLimits();
 	return 0;
 }
