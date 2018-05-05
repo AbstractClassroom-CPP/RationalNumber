@@ -22,3 +22,4 @@ cmake --build .
 ctest --output-on-failure
 ```
 
+Link `RationalNumber::RationalNumber` and include `RationalNumber.hpp`.
