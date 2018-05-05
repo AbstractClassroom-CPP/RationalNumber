@@ -36,6 +36,14 @@ public:
 		return left;
 	}
 
+	friend bool operator==(const RationalNumber& left, const RationalNumber& right) {
+		return left.numerator_ == right.numerator_ && left.denominator_ == right.denominator_;
+	}
+
+	friend bool operator!=(const RationalNumber& left, const RationalNumber& right) {
+		return !(left == right);
+	}
+
 private:
 
 	int numerator_;
