@@ -44,6 +44,22 @@ public:
 		return !(left == right);
 	}
 
+	friend bool operator<(const RationalNumber& left, const RationalNumber& right) {
+		return Wide(left.numerator_) * Wide(right.denominator_) < Wide(right.numerator_) * Wide(left.denominator_);
+	}
+
+	friend bool operator>(const RationalNumber& left, const RationalNumber& right) {
+		return right < left;
+	}
+
+	friend bool operator<=(const RationalNumber& left, const RationalNumber& right) {
+		return !(right < left);
+	}
+
+	friend bool operator>=(const RationalNumber& left, const RationalNumber& right) {
+		return !(left < right);
+	}
+
 private:
 
 	int numerator_;
