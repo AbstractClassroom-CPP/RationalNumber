@@ -9,8 +9,10 @@ Access values with `getNumerator()`, `getDenominator()`, `isZero()`, `isInteger(
 | Version | Added features |
 | --- | --- |
 | `v1.0.0` | Reduced fractions, addition, subtraction, and comparisons |
+| `v2.0.0` | Multiplication, division, remainder, and unary signs |
 
 Zero denominators and division by zero throw `std::domain_error`. Results outside `int` storage throw `std::overflow_error`.
+Remainder uses a quotient truncated toward zero. Bitwise operations are not defined for fractions.
 
 Build with CMake 3.10+ and a C++11 compiler
 
