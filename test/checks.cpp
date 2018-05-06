@@ -56,11 +56,17 @@ void Multiplication() {
 	check(RationalNumber(1, INT_MAX) * INT_MAX == 1);
 }
 
+void Division() {
+	check(RationalNumber(2, 3) / RationalNumber(-4, 5) == RationalNumber(-5, 6));
+	check(2 / RationalNumber(2, 3) == 3);
+}
+
 int main() {
 	Normalization();
 	Addition();
 	Subtraction();
 	NativeLimits();
 	Multiplication();
+	Division();
 	return 0;
 }
