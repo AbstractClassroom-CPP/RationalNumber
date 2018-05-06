@@ -26,6 +26,7 @@ public:
 	RationalNumber& operator+=(const RationalNumber& other);
 	RationalNumber& operator-=(const RationalNumber& other);
 	RationalNumber& operator*=(const RationalNumber& other);
+	RationalNumber& operator/=(const RationalNumber& other);
 
 	friend RationalNumber operator+(RationalNumber left, const RationalNumber& right) {
 		left += right;
