@@ -61,6 +61,11 @@ public:
 		return !(left < right);
 	}
 
+	friend RationalNumber operator*(RationalNumber left, const RationalNumber& right) {
+		left *= right;
+		return left;
+	}
+
 private:
 
 	int numerator_;

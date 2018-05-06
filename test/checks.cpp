@@ -51,10 +51,16 @@ void NativeLimits() {
 	check(RationalNumber(INT_MIN, 2) + RationalNumber(INT_MIN, 2) == INT_MIN);
 }
 
+void Multiplication() {
+	check(RationalNumber(2, 3) * RationalNumber(9, 4) == RationalNumber(3, 2));
+	check(RationalNumber(1, INT_MAX) * INT_MAX == 1);
+}
+
 int main() {
 	Normalization();
 	Addition();
 	Subtraction();
 	NativeLimits();
+	Multiplication();
 	return 0;
 }
