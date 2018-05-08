@@ -66,3 +66,12 @@ RationalNumber& RationalNumber::operator/=(const RationalNumber& other) {
 	setValues(Wide(numerator_) * Wide(other.denominator_), Wide(denominator_) * Wide(other.numerator_));
 	return *this;
 }
+
+RationalNumber& RationalNumber::operator%=(const RationalNumber& other) {
+	if (other.isZero()) {
+		throw std::domain_error("Remainder divisor cannot be zero");
+	}
+	Wide numerator = (Wide(numerator_) * Wide(other.denominator_)) % (Wide(denominator_) * Wide(other.numerator_));
+	setValues(numerator, Wide(denominator_) * Wide(other.denominator_));
+	return *this;
+}
