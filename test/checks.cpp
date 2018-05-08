@@ -61,6 +61,12 @@ void Division() {
 	check(2 / RationalNumber(2, 3) == 3);
 }
 
+void Remainder() {
+	check(RationalNumber(7, 3) % RationalNumber(2, 3) == RationalNumber(1, 3));
+	check(RationalNumber(-7, 3) % RationalNumber(2, 3) == RationalNumber(-1, 3));
+	check(RationalNumber(7, 3) % RationalNumber(-2, 3) == RationalNumber(1, 3));
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -68,5 +74,6 @@ int main() {
 	NativeLimits();
 	Multiplication();
 	Division();
+	Remainder();
 	return 0;
 }
