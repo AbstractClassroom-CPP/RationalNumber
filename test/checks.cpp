@@ -67,6 +67,12 @@ void Remainder() {
 	check(RationalNumber(7, 3) % RationalNumber(-2, 3) == RationalNumber(1, 3));
 }
 
+void UnarySigns() {
+	check(+RationalNumber(-2, 3) == RationalNumber(-2, 3));
+	check(-RationalNumber(-2, 3) == RationalNumber(2, 3));
+	check(-RationalNumber(0) == 0);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -75,5 +81,6 @@ int main() {
 	Multiplication();
 	Division();
 	Remainder();
+	UnarySigns();
 	return 0;
 }

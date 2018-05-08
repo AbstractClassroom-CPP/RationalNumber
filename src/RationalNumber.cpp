@@ -79,3 +79,9 @@ RationalNumber& RationalNumber::operator%=(const RationalNumber& other) {
 RationalNumber RationalNumber::operator+() const {
 	return *this;
 }
+
+RationalNumber RationalNumber::operator-() const {
+	RationalNumber result;
+	result.setValues(-Wide(numerator_), Wide(denominator_));
+	return result;
+}
