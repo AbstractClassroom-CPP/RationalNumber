@@ -28,6 +28,7 @@ public:
 	RationalNumber& operator*=(const RationalNumber& other);
 	RationalNumber& operator/=(const RationalNumber& other);
 	RationalNumber& operator%=(const RationalNumber& other);
+	RationalNumber operator+() const;
 
 	friend RationalNumber operator+(RationalNumber left, const RationalNumber& right) {
 		left += right;
