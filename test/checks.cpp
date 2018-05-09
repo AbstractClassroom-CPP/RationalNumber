@@ -95,6 +95,19 @@ void ZeroDivisors() {
 	check(value == RationalNumber(3, 4));
 }
 
+void Overflow() {
+	RationalNumber value(INT_MAX);
+	bool rejected = false;
+	try {
+		value *= 2;
+	}
+	catch (const std::overflow_error&) {
+		rejected = true;
+	}
+	check(rejected);
+	check(value == INT_MAX);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -105,5 +118,6 @@ int main() {
 	Remainder();
 	UnarySigns();
 	ZeroDivisors();
+	Overflow();
 	return 0;
 }
