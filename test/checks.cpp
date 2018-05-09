@@ -73,6 +73,28 @@ void UnarySigns() {
 	check(-RationalNumber(0) == 0);
 }
 
+void ZeroDivisors() {
+	RationalNumber value(3, 4);
+	bool rejected = false;
+	try {
+		value /= 0;
+	}
+	catch (const std::domain_error&) {
+		rejected = true;
+	}
+	check(rejected);
+	check(value == RationalNumber(3, 4));
+	rejected = false;
+	try {
+		value %= 0;
+	}
+	catch (const std::domain_error&) {
+		rejected = true;
+	}
+	check(rejected);
+	check(value == RationalNumber(3, 4));
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -82,5 +104,6 @@ int main() {
 	Division();
 	Remainder();
 	UnarySigns();
+	ZeroDivisors();
 	return 0;
 }
