@@ -10,6 +10,7 @@ Access values with `getNumerator()`, `getDenominator()`, `isZero()`, `isInteger(
 | --- | --- |
 | `v1.0.0` | Reduced fractions, addition, subtraction, and comparisons |
 | `v2.0.0` | Multiplication, division, remainder, and unary signs |
+| `v3.0.0` | Increment, decrement, and stream operators |
 
 Zero denominators and division by zero throw `std::domain_error`. Results outside `int` storage throw `std::overflow_error`.
 Remainder uses a quotient truncated toward zero. Bitwise operations are not defined for fractions.

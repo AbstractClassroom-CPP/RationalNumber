@@ -85,3 +85,8 @@ RationalNumber RationalNumber::operator-() const {
 	result.setValues(-Wide(numerator_), Wide(denominator_));
 	return result;
 }
+
+RationalNumber& RationalNumber::operator++() {
+	*this += 1;
+	return *this;
+}
