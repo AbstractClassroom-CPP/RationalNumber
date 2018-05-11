@@ -32,6 +32,7 @@ public:
 	RationalNumber operator-() const;
 	RationalNumber& operator++();
 	RationalNumber operator++(int);
+	RationalNumber& operator--();
 
 	friend RationalNumber operator+(RationalNumber left, const RationalNumber& right) {
 		left += right;

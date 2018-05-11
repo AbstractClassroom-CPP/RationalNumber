@@ -96,3 +96,8 @@ RationalNumber RationalNumber::operator++(int) {
 	++(*this);
 	return previous;
 }
+
+RationalNumber& RationalNumber::operator--() {
+	*this -= 1;
+	return *this;
+}
