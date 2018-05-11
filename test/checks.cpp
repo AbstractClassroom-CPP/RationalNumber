@@ -108,6 +108,15 @@ void Overflow() {
 	check(value == INT_MAX);
 }
 
+void IncrementAndDecrement() {
+	RationalNumber value(1, 2);
+	check(value++ == RationalNumber(1, 2));
+	check(value == RationalNumber(3, 2));
+	check(++value == RationalNumber(5, 2));
+	check(value-- == RationalNumber(5, 2));
+	check(--value == RationalNumber(1, 2));
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -119,5 +128,6 @@ int main() {
 	UnarySigns();
 	ZeroDivisors();
 	Overflow();
+	IncrementAndDecrement();
 	return 0;
 }
