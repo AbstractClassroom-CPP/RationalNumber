@@ -90,3 +90,9 @@ RationalNumber& RationalNumber::operator++() {
 	*this += 1;
 	return *this;
 }
+
+RationalNumber RationalNumber::operator++(int) {
+	RationalNumber previous = *this;
+	++(*this);
+	return previous;
+}
