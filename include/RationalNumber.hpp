@@ -84,6 +84,11 @@ public:
 		return left;
 	}
 
+	friend std::ostream& operator<<(std::ostream& out, const RationalNumber& value) {
+		out << value.numerator_ << "/" << value.denominator_;
+		return out;
+	}
+
 private:
 
 	int numerator_;
