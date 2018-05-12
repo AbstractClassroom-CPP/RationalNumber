@@ -117,6 +117,22 @@ void IncrementAndDecrement() {
 	check(--value == RationalNumber(1, 2));
 }
 
+void Streams() {
+	std::istringstream in("6/-8 12");
+	RationalNumber value;
+	in >> value;
+	check(value == RationalNumber(-3, 4));
+	std::ostringstream out;
+	out << value;
+	check(out.str() == "-3/4");
+	in >> value;
+	check(value == 12);
+	std::istringstream invalid("1/0");
+	invalid >> value;
+	check(invalid.fail());
+	check(value == 12);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -129,5 +145,6 @@ int main() {
 	ZeroDivisors();
 	Overflow();
 	IncrementAndDecrement();
+	Streams();
 	return 0;
 }
