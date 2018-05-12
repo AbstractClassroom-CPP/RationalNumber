@@ -89,6 +89,37 @@ public:
 		return out;
 	}
 
+	friend std::istream& operator>>(std::istream& in, RationalNumber& value) {
+		std::string text;
+		if (!(in >> text)) {
+			return in;
+		}
+		std::size_t slash = text.find('/');
+		Wide numerator;
+		Wide denominator = 1;
+		bool valid = false;
+		if (slash == std::string::npos) {
+			valid = readInteger(text, numerator);
+		}
+		else {
+			valid = readInteger(text.substr(0, slash), numerator) && readInteger(text.substr(slash + 1), denominator);
+		}
+		if (!valid) {
+			in.setstate(std::ios::failbit);
+			return in;
+		}
+		try {
+			value.setValues(numerator, denominator);
+		}
+		catch (const std::domain_error&) {
+			in.setstate(std::ios::failbit);
+		}
+		catch (const std::overflow_error&) {
+			in.setstate(std::ios::failbit);
+		}
+		return in;
+	}
+
 private:
 
 	int numerator_;
