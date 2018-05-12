@@ -130,6 +130,39 @@ private:
 		denominator_ = denominator;
 	}
 
+	static bool readInteger(const std::string& text, Wide& value) {
+		if (text.empty()) {
+			return false;
+		}
+		std::size_t i = 0;
+		bool negative = false;
+		if (text[i] == '-' || text[i] == '+') {
+			negative = text[i] == '-';
+			i++;
+		}
+		if (i == text.size()) {
+			return false;
+		}
+		value = 0;
+		for (; i < text.size(); i++) {
+			if (text[i] < '0' || text[i] > '9') {
+				return false;
+			}
+			int digit = text[i] - '0';
+			if (value < (Wide(std::numeric_limits<int>::min()) + digit) / 10) {
+				return false;
+			}
+			value = value * 10 - digit;
+		}
+		if (!negative) {
+			value = -value;
+			if (value > std::numeric_limits<int>::max()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 };
 
 #endif
