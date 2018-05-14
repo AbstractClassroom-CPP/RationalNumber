@@ -133,6 +133,18 @@ void Streams() {
 	check(value == 12);
 }
 
+void NativeAssignment() {
+	RationalNumber value(2, 3);
+	value = -7;
+	check(value.getNumerator() == -7);
+	check(value.getDenominator() == 1);
+	RationalNumber copy(value);
+	check(copy == value);
+	RationalNumber& same = value;
+	value = same;
+	check(value == -7);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -146,5 +158,6 @@ int main() {
 	Overflow();
 	IncrementAndDecrement();
 	Streams();
+	NativeAssignment();
 	return 0;
 }
