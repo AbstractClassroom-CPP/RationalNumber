@@ -145,6 +145,18 @@ void NativeAssignment() {
 	check(value == -7);
 }
 
+void Aliasing() {
+	RationalNumber value(2, 3);
+	value += value;
+	check(value == RationalNumber(4, 3));
+	value *= value;
+	check(value == RationalNumber(16, 9));
+	value /= value;
+	check(value == 1);
+	value -= value;
+	check(value == 0);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -159,5 +171,6 @@ int main() {
 	IncrementAndDecrement();
 	Streams();
 	NativeAssignment();
+	Aliasing();
 	return 0;
 }
