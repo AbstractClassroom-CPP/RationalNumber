@@ -2,9 +2,8 @@
 #include <iostream>
 
 int main() {
-	RationalNumber fraction(6, 8);
-	std::cout << fraction.getNumerator() << "/" << fraction.getDenominator() << "\n";
-	RationalNumber scaled = fraction * 4;
-	std::cout << scaled.getNumerator() << "/" << scaled.getDenominator() << "\n";
+	RationalNumber a(1, 3);
+	RationalNumber b(1, 6);
+	std::cout << a << " + " << b << " = " << a + b << "\n";
 	return 0;
 }
