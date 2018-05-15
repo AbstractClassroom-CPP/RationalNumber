@@ -27,3 +27,4 @@ ctest --output-on-failure
 
 Link `RationalNumber::RationalNumber` and include `RationalNumber.hpp`.
 Use `-DBUILD_TESTING=OFF` or `-DRATIONAL_NUMBER_BUILD_EXAMPLE=OFF` to disable those builds.
+When included with `add_subdirectory`, tests and examples are disabled by default.
