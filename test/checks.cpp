@@ -167,6 +167,19 @@ void Comparison() {
 	check(RationalNumber(1, 2) != 1);
 }
 
+void FailedAddition() {
+	RationalNumber value(INT_MAX);
+	bool rejected = false;
+	try {
+		value += 1;
+	}
+	catch (const std::overflow_error&) {
+		rejected = true;
+	}
+	check(rejected);
+	check(value == INT_MAX);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -183,5 +196,6 @@ int main() {
 	NativeAssignment();
 	Aliasing();
 	Comparison();
+	FailedAddition();
 	return 0;
 }
