@@ -157,6 +157,16 @@ void Aliasing() {
 	check(value == 0);
 }
 
+void Comparison() {
+	check(RationalNumber(2, 4) == RationalNumber(1, 2));
+	check(RationalNumber(-1, 3) < RationalNumber(-1, 4));
+	check(RationalNumber(INT_MAX, INT_MAX - 1) > RationalNumber(INT_MAX - 1, INT_MAX));
+	check(RationalNumber(INT_MIN, INT_MAX) < -1);
+	check(0 <= RationalNumber(0));
+	check(2 >= RationalNumber(2));
+	check(RationalNumber(1, 2) != 1);
+}
+
 int main() {
 	Normalization();
 	Addition();
@@ -172,5 +182,6 @@ int main() {
 	Streams();
 	NativeAssignment();
 	Aliasing();
+	Comparison();
 	return 0;
 }
