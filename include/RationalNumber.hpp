@@ -28,7 +28,8 @@ public:
 		return denominator_;
 	}
 
-	RationalNumber(const T& value) {
+	template <class Integer>
+	RationalNumber(const Integer& value) {
 		numerator_ = value;
 		denominator_ = 1;
 	}
