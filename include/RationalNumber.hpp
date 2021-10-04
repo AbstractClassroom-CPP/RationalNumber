@@ -58,15 +58,31 @@ public:
 	}
 
 	double getDoubleApprox() const {
-		std::ostringstream numerator;
-		std::ostringstream denominator;
-		numerator << numerator_;
-		denominator << denominator_;
-		double n = 0;
-		double d = 1;
-		std::istringstream(numerator.str()) >> n;
-		std::istringstream(denominator.str()) >> d;
-		return n / d;
+		if (isZero()) {
+			return 0.0;
+		}
+		Wide n = numerator_;
+		bool negative = n < 0;
+		if (negative) {
+			n = -n;
+		}
+		std::size_t numeratorPlaces;
+		std::size_t denominatorPlaces;
+		double leadingNumerator = leadingDigits(n, numeratorPlaces);
+		double leadingDenominator = leadingDigits(Wide(denominator_), denominatorPlaces);
+		double result = leadingNumerator / leadingDenominator;
+		while (numeratorPlaces > denominatorPlaces && std::isfinite(result)) {
+			result *= 10.0;
+			numeratorPlaces--;
+		}
+		while (denominatorPlaces > numeratorPlaces && result != 0.0) {
+			result /= 10.0;
+			denominatorPlaces--;
+		}
+		if (negative) {
+			result = -result;
+		}
+		return result;
 	}
 
 	RationalNumber& operator+=(const RationalNumber& other) {
@@ -283,6 +299,22 @@ private:
 			}
 		}
 		return true;
+	}
+
+	static double leadingDigits(const Wide& value, std::size_t& skipped) {
+		std::ostringstream out;
+		out << value;
+		std::string text = out.str();
+		std::size_t count = text.size();
+		if (count > 16) {
+			count = 16;
+		}
+		double result = 0;
+		for (std::size_t i = 0; i < count; i++) {
+			result = result * 10.0 + (text[i] - '0');
+		}
+		skipped = text.size() - count;
+		return result;
 	}
 
 };
