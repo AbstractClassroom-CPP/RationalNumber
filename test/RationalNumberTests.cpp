@@ -1,0 +1,176 @@
+#include "RationalNumber.hpp"
+#include <gtest/gtest.h>
+#include <climits>
+#include <sstream>
+
+TEST(RationalNumberTests, Normalization) {
+	RationalNumber<int> zero;
+	EXPECT_TRUE(zero.getNumerator() == 0);
+	EXPECT_TRUE(zero.getDenominator() == 1);
+	EXPECT_TRUE(zero.isZero());
+	EXPECT_TRUE(zero.isInteger());
+	RationalNumber<int> reduced(6, -8);
+	EXPECT_TRUE(reduced.getNumerator() == -3);
+	EXPECT_TRUE(reduced.getDenominator() == 4);
+	EXPECT_TRUE(RationalNumber<int>(0, -12).getDenominator() == 1);
+	EXPECT_TRUE(RationalNumber<int>(-12, -3).getNumerator() == 4);
+	EXPECT_TRUE(RationalNumber<int>(6, 3).isInteger());
+	EXPECT_TRUE(RationalNumber<int>(1, 4).getDoubleApprox() == 0.25);
+	bool rejected = false;
+	try {
+		RationalNumber<int> invalid(1, 0);
+	}
+	catch (const std::domain_error&) {
+		rejected = true;
+	}
+	EXPECT_TRUE(rejected);
+}
+
+TEST(RationalNumberTests, Addition) {
+	EXPECT_TRUE((RationalNumber<int>(1, 6) + RationalNumber<int>(1, 3)).getNumerator() == 1);
+	EXPECT_TRUE((RationalNumber<int>(1, 6) + RationalNumber<int>(1, 3)).getDenominator() == 2);
+	EXPECT_TRUE((2 + RationalNumber<int>(1, 2)).getNumerator() == 5);
+}
+
+TEST(RationalNumberTests, Subtraction) {
+	EXPECT_TRUE((RationalNumber<int>(1, 2) - RationalNumber<int>(1, 2)).isZero());
+	EXPECT_TRUE((3 - RationalNumber<int>(1, 2)).getNumerator() == 5);
+}
+
+TEST(RationalNumberTests, NativeLimits) {
+	EXPECT_TRUE(RationalNumber<int>(INT_MIN, INT_MIN) == 1);
+	EXPECT_TRUE(RationalNumber<int>(INT_MIN, 2).getNumerator() == INT_MIN / 2);
+	EXPECT_TRUE(RationalNumber<int>(0, INT_MIN) == 0);
+	EXPECT_TRUE(RationalNumber<int>(INT_MAX, 2) + RationalNumber<int>(INT_MAX, 2) == INT_MAX);
+	EXPECT_TRUE(RationalNumber<int>(INT_MIN, 2) + RationalNumber<int>(INT_MIN, 2) == INT_MIN);
+}
+
+TEST(RationalNumberTests, Multiplication) {
+	EXPECT_TRUE(RationalNumber<int>(2, 3) * RationalNumber<int>(9, 4) == RationalNumber<int>(3, 2));
+	EXPECT_TRUE(RationalNumber<int>(1, INT_MAX) * INT_MAX == 1);
+}
+
+TEST(RationalNumberTests, Division) {
+	EXPECT_TRUE(RationalNumber<int>(2, 3) / RationalNumber<int>(-4, 5) == RationalNumber<int>(-5, 6));
+	EXPECT_TRUE(2 / RationalNumber<int>(2, 3) == 3);
+}
+
+TEST(RationalNumberTests, Remainder) {
+	EXPECT_TRUE(RationalNumber<int>(7, 3) % RationalNumber<int>(2, 3) == RationalNumber<int>(1, 3));
+	EXPECT_TRUE(RationalNumber<int>(-7, 3) % RationalNumber<int>(2, 3) == RationalNumber<int>(-1, 3));
+	EXPECT_TRUE(RationalNumber<int>(7, 3) % RationalNumber<int>(-2, 3) == RationalNumber<int>(1, 3));
+}
+
+TEST(RationalNumberTests, UnarySigns) {
+	EXPECT_TRUE(+RationalNumber<int>(-2, 3) == RationalNumber<int>(-2, 3));
+	EXPECT_TRUE(-RationalNumber<int>(-2, 3) == RationalNumber<int>(2, 3));
+	EXPECT_TRUE(-RationalNumber<int>(0) == 0);
+}
+
+TEST(RationalNumberTests, ZeroDivisors) {
+	RationalNumber<int> value(3, 4);
+	bool rejected = false;
+	try {
+		value /= 0;
+	}
+	catch (const std::domain_error&) {
+		rejected = true;
+	}
+	EXPECT_TRUE(rejected);
+	EXPECT_TRUE(value == RationalNumber<int>(3, 4));
+	rejected = false;
+	try {
+		value %= 0;
+	}
+	catch (const std::domain_error&) {
+		rejected = true;
+	}
+	EXPECT_TRUE(rejected);
+	EXPECT_TRUE(value == RationalNumber<int>(3, 4));
+}
+
+TEST(RationalNumberTests, Overflow) {
+	RationalNumber<int> value(INT_MAX);
+	bool rejected = false;
+	try {
+		value *= 2;
+	}
+	catch (const std::overflow_error&) {
+		rejected = true;
+	}
+	EXPECT_TRUE(rejected);
+	EXPECT_TRUE(value == INT_MAX);
+}
+
+TEST(RationalNumberTests, IncrementAndDecrement) {
+	RationalNumber<int> value(1, 2);
+	EXPECT_TRUE(value++ == RationalNumber<int>(1, 2));
+	EXPECT_TRUE(value == RationalNumber<int>(3, 2));
+	EXPECT_TRUE(++value == RationalNumber<int>(5, 2));
+	EXPECT_TRUE(value-- == RationalNumber<int>(5, 2));
+	EXPECT_TRUE(--value == RationalNumber<int>(1, 2));
+}
+
+TEST(RationalNumberTests, Streams) {
+	std::istringstream in("6/-8 12");
+	RationalNumber<int> value;
+	in >> value;
+	EXPECT_TRUE(value == RationalNumber<int>(-3, 4));
+	std::ostringstream out;
+	out << value;
+	EXPECT_TRUE(out.str() == "-3/4");
+	in >> value;
+	EXPECT_TRUE(value == 12);
+	std::istringstream invalid("1/0");
+	invalid >> value;
+	EXPECT_TRUE(invalid.fail());
+	EXPECT_TRUE(value == 12);
+}
+
+TEST(RationalNumberTests, NativeAssignment) {
+	RationalNumber<int> value(2, 3);
+	value = -7;
+	EXPECT_TRUE(value.getNumerator() == -7);
+	EXPECT_TRUE(value.getDenominator() == 1);
+	RationalNumber<int> copy(value);
+	EXPECT_TRUE(copy == value);
+	RationalNumber<int>& same = value;
+	value = same;
+	EXPECT_TRUE(value == -7);
+}
+
+TEST(RationalNumberTests, Aliasing) {
+	RationalNumber<int> value(2, 3);
+	value += value;
+	EXPECT_TRUE(value == RationalNumber<int>(4, 3));
+	value *= value;
+	EXPECT_TRUE(value == RationalNumber<int>(16, 9));
+	value /= value;
+	EXPECT_TRUE(value == 1);
+	value -= value;
+	EXPECT_TRUE(value == 0);
+}
+
+TEST(RationalNumberTests, Comparison) {
+	EXPECT_TRUE(RationalNumber<int>(2, 4) == RationalNumber<int>(1, 2));
+	EXPECT_TRUE(RationalNumber<int>(-1, 3) < RationalNumber<int>(-1, 4));
+	EXPECT_TRUE(RationalNumber<int>(INT_MAX, INT_MAX - 1) > RationalNumber<int>(INT_MAX - 1, INT_MAX));
+	EXPECT_TRUE(RationalNumber<int>(INT_MIN, INT_MAX) < -1);
+	EXPECT_TRUE(0 <= RationalNumber<int>(0));
+	EXPECT_TRUE(2 >= RationalNumber<int>(2));
+	EXPECT_TRUE(RationalNumber<int>(1, 2) != 1);
+}
+
+TEST(RationalNumberTests, FailedAddition) {
+	RationalNumber<int> value(INT_MAX);
+	bool rejected = false;
+	try {
+		value += 1;
+	}
+	catch (const std::overflow_error&) {
+		rejected = true;
+	}
+	EXPECT_TRUE(rejected);
+	EXPECT_TRUE(value == INT_MAX);
+}
+

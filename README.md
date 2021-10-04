@@ -26,6 +26,8 @@ cmake --build .
 ctest --output-on-failure
 ```
 
+Tests use GoogleTest 1.10.0. Tests and examples fetch ArbitraryInteger v3.0.0.
+
 Link `RationalNumber::RationalNumber` and include `RationalNumber.hpp`.
 Use `-DBUILD_TESTING=OFF` or `-DRATIONAL_NUMBER_BUILD_EXAMPLE=OFF` to disable those builds.
 When included with `add_subdirectory`, tests and examples are disabled by default.
