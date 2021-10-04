@@ -8,32 +8,129 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include "RationalNumberStorage.hpp"
 
+template <class T = int>
 class RationalNumber {
-	typedef long long Wide;
+	typedef typename rational_number_detail::Storage<T>::Wide Wide;
 
 public:
-	RationalNumber();
-	int getNumerator() const;
-	int getDenominator() const;
-	RationalNumber(int value);
-	RationalNumber(const RationalNumber& other);
-	RationalNumber& operator=(const RationalNumber& other);
-	RationalNumber(int numerator, int denominator);
-	bool isZero() const;
-	bool isInteger() const;
-	double getDoubleApprox() const;
-	RationalNumber& operator+=(const RationalNumber& other);
-	RationalNumber& operator-=(const RationalNumber& other);
-	RationalNumber& operator*=(const RationalNumber& other);
-	RationalNumber& operator/=(const RationalNumber& other);
-	RationalNumber& operator%=(const RationalNumber& other);
-	RationalNumber operator+() const;
-	RationalNumber operator-() const;
-	RationalNumber& operator++();
-	RationalNumber operator++(int);
-	RationalNumber& operator--();
-	RationalNumber operator--(int);
+	RationalNumber() {
+		numerator_ = 0;
+		denominator_ = 1;
+	}
+
+	T getNumerator() const {
+		return numerator_;
+	}
+
+	T getDenominator() const {
+		return denominator_;
+	}
+
+	RationalNumber(const T& value) {
+		numerator_ = value;
+		denominator_ = 1;
+	}
+
+	RationalNumber(const RationalNumber& other) {
+		numerator_ = other.numerator_;
+		denominator_ = other.denominator_;
+	}
+
+	RationalNumber& operator=(const RationalNumber& other) {
+		numerator_ = other.numerator_;
+		denominator_ = other.denominator_;
+		return *this;
+	}
+
+	RationalNumber(const T& numerator, const T& denominator) {
+		setValues(Wide(numerator), Wide(denominator));
+	}
+
+	bool isZero() const {
+		return numerator_ == 0;
+	}
+
+	bool isInteger() const {
+		return denominator_ == 1;
+	}
+
+	double getDoubleApprox() const {
+		std::ostringstream numerator;
+		std::ostringstream denominator;
+		numerator << numerator_;
+		denominator << denominator_;
+		double n = 0;
+		double d = 1;
+		std::istringstream(numerator.str()) >> n;
+		std::istringstream(denominator.str()) >> d;
+		return n / d;
+	}
+
+	RationalNumber& operator+=(const RationalNumber& other) {
+		setValues(Wide(numerator_) * Wide(other.denominator_) + Wide(other.numerator_) * Wide(denominator_),
+		Wide(denominator_) * Wide(other.denominator_));
+		return *this;
+	}
+
+	RationalNumber& operator-=(const RationalNumber& other) {
+		setValues(Wide(numerator_) * Wide(other.denominator_) - Wide(other.numerator_) * Wide(denominator_),
+		Wide(denominator_) * Wide(other.denominator_));
+		return *this;
+	}
+
+	RationalNumber& operator*=(const RationalNumber& other) {
+		setValues(Wide(numerator_) * Wide(other.numerator_), Wide(denominator_) * Wide(other.denominator_));
+		return *this;
+	}
+
+	RationalNumber& operator/=(const RationalNumber& other) {
+		setValues(Wide(numerator_) * Wide(other.denominator_), Wide(denominator_) * Wide(other.numerator_));
+		return *this;
+	}
+
+	RationalNumber& operator%=(const RationalNumber& other) {
+		if (other.isZero()) {
+			throw std::domain_error("Remainder divisor cannot be zero");
+		}
+		Wide numerator = (Wide(numerator_) * Wide(other.denominator_)) % (Wide(denominator_) * Wide(other.numerator_));
+		setValues(numerator, Wide(denominator_) * Wide(other.denominator_));
+		return *this;
+	}
+
+	RationalNumber operator+() const {
+		return *this;
+	}
+
+	RationalNumber operator-() const {
+		RationalNumber result;
+		result.setValues(-Wide(numerator_), Wide(denominator_));
+		return result;
+	}
+
+	RationalNumber& operator++() {
+		*this += 1;
+		return *this;
+	}
+
+	RationalNumber operator++(int) {
+		RationalNumber previous = *this;
+		++(*this);
+		return previous;
+	}
+
+	RationalNumber& operator--() {
+		*this -= 1;
+		return *this;
+	}
+
+	RationalNumber operator--(int) {
+		RationalNumber previous = *this;
+		--(*this);
+		return previous;
+	}
+
 
 	friend RationalNumber operator+(RationalNumber left, const RationalNumber& right) {
 		left += right;
@@ -122,15 +219,8 @@ public:
 
 private:
 
-	int numerator_;
-	int denominator_;
-
-	static int narrow(Wide value) {
-		if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max()) {
-			throw std::overflow_error("Rational number does not fit in int");
-		}
-		return static_cast<int>(value);
-	}
+	T numerator_;
+	T denominator_;
 
 	void setValues(Wide n, Wide d) {
 		if (d == 0) {
@@ -155,8 +245,8 @@ private:
 		}
 		n /= a;
 		d /= a;
-		int numerator = narrow(n);
-		int denominator = narrow(d);
+		T numerator = rational_number_detail::Storage<T>::narrow(n);
+		T denominator = rational_number_detail::Storage<T>::narrow(d);
 		numerator_ = numerator;
 		denominator_ = denominator;
 	}
