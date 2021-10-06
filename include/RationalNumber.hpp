@@ -287,14 +287,14 @@ private:
 				return false;
 			}
 			int digit = text[i] - '0';
-			if (value < (Wide(std::numeric_limits<int>::min()) + digit) / 10) {
+			if (std::numeric_limits<T>::is_bounded && value < (Wide(std::numeric_limits<T>::min()) + digit) / 10) {
 				return false;
 			}
 			value = value * 10 - digit;
 		}
 		if (!negative) {
 			value = -value;
-			if (value > std::numeric_limits<int>::max()) {
+			if (std::numeric_limits<T>::is_bounded && value > std::numeric_limits<T>::max()) {
 				return false;
 			}
 		}
