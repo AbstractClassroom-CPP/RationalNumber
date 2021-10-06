@@ -174,3 +174,10 @@ TEST(RationalNumberTests, FailedAddition) {
 	EXPECT_TRUE(value == INT_MAX);
 }
 
+TEST(RationalNumberTests, InvalidDenominators) {
+	EXPECT_THROW(RationalNumber<int>(0, 0), std::domain_error);
+	EXPECT_THROW(RationalNumber<int>(1, INT_MIN), std::overflow_error);
+	EXPECT_THROW(RationalNumber<int>(INT_MIN, -1), std::overflow_error);
+	EXPECT_EQ(RationalNumber<int>(2, INT_MIN), RationalNumber<int>(-1, 1073741824));
+}
+
