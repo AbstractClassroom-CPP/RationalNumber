@@ -189,3 +189,14 @@ TEST(RationalNumberTests, CheckedArithmetic) {
 	EXPECT_EQ(RationalNumber<int>(INT_MIN, INT_MAX) - RationalNumber<int>(INT_MIN, INT_MAX), RationalNumber<int>(0));
 }
 
+TEST(RationalNumberTests, MalformedStreams) {
+	const char* tokens[] = {"", "+", "-", "1/", "/2", "1/2/3", "abc", "1/0", "2147483648", "-2147483649"};
+	for (unsigned int i = 0; i < sizeof(tokens) / sizeof(tokens[0]); i++) {
+		std::istringstream in(tokens[i]);
+		RationalNumber<int> value(3, 4);
+		in >> value;
+		EXPECT_TRUE(in.fail()) << tokens[i];
+		EXPECT_EQ(value, RationalNumber<int>(3, 4));
+	}
+}
+
