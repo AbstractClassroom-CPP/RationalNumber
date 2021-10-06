@@ -181,3 +181,11 @@ TEST(RationalNumberTests, InvalidDenominators) {
 	EXPECT_EQ(RationalNumber<int>(2, INT_MIN), RationalNumber<int>(-1, 1073741824));
 }
 
+TEST(RationalNumberTests, CheckedArithmetic) {
+	EXPECT_THROW(-RationalNumber<int>(INT_MIN), std::overflow_error);
+	EXPECT_THROW(RationalNumber<int>(INT_MIN) / -1, std::overflow_error);
+	EXPECT_THROW(RationalNumber<int>(1, INT_MAX) * RationalNumber<int>(1, 2), std::overflow_error);
+	EXPECT_EQ(RationalNumber<int>(INT_MIN) % -1, RationalNumber<int>(0));
+	EXPECT_EQ(RationalNumber<int>(INT_MIN, INT_MAX) - RationalNumber<int>(INT_MIN, INT_MAX), RationalNumber<int>(0));
+}
+
