@@ -201,3 +201,16 @@ TEST(RationalNumberTests, MalformedStreams) {
 	}
 }
 
+TEST(RationalNumberTests, BigArithmetic) {
+	typedef RationalNumber<ArbitraryInteger> Fraction;
+	ArbitraryInteger large("1234567890123456789012345678901234567890");
+	Fraction a(large, 3);
+	Fraction b(7, 5);
+	EXPECT_EQ((a + b) - b, a);
+	EXPECT_EQ((a * b) / b, a);
+	EXPECT_EQ(a.getNumerator(), large / 3);
+	EXPECT_EQ(a.getDenominator(), ArbitraryInteger(1));
+	EXPECT_EQ(Fraction(large, large * 7), Fraction(1, 7));
+	EXPECT_EQ(Fraction(0, -large), Fraction(0));
+}
+
