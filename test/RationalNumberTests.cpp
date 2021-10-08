@@ -225,3 +225,25 @@ TEST(RationalNumberTests, BigApproximation) {
 	EXPECT_EQ(Fraction(0).getDoubleApprox(), 0.0);
 }
 
+TEST(RationalNumberTests, BigMixedIntegers) {
+	typedef RationalNumber<ArbitraryInteger> Fraction;
+	Fraction value = 2;
+	value = 3;
+	EXPECT_EQ(2 + value, Fraction(5));
+	EXPECT_EQ(value + 2, Fraction(5));
+	EXPECT_EQ(ArbitraryInteger(5) - value, Fraction(2));
+	EXPECT_EQ(value * 2, Fraction(6));
+	EXPECT_EQ(2 / value, Fraction(2, 3));
+	EXPECT_EQ(value % 2, Fraction(1));
+	EXPECT_TRUE(2 < value);
+	EXPECT_TRUE(value > ArbitraryInteger(2));
+	value += 2;
+	value -= 1;
+	value *= 3;
+	value /= 2;
+	value %= 4;
+	EXPECT_EQ(value, Fraction(2));
+	EXPECT_EQ(value++, Fraction(2));
+	EXPECT_EQ(--value, Fraction(2));
+}
+
