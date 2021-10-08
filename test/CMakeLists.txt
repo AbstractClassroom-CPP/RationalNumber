@@ -11,6 +11,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(rational_number_tests RationalNumberTests.cpp)
 target_link_libraries(rational_number_tests PRIVATE RationalNumber::RationalNumber gtest_main)
+target_link_libraries(rational_number_tests PRIVATE ArbitraryInteger::ArbitraryInteger)
 
 include(GoogleTest)
 gtest_discover_tests(rational_number_tests)

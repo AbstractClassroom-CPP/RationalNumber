@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <climits>
 #include <sstream>
+#include "ArbitraryInteger.hpp"
 
 TEST(RationalNumberTests, Normalization) {
 	RationalNumber<int> zero;

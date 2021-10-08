@@ -18,6 +18,18 @@ endif()
 
 option(RATIONAL_NUMBER_BUILD_EXAMPLE "Build the examples" ${rational_number_top_level})
 
+if((rational_number_top_level AND BUILD_TESTING))
+	if(NOT TARGET ArbitraryInteger::ArbitraryInteger)
+		include(FetchContent)
+		FetchContent_Declare(arbitrary_integer
+			GIT_REPOSITORY https://github.com/AbstractClassroom-CPP/ArbitraryInteger.git
+			GIT_TAG v3.0.0
+			GIT_SHALLOW TRUE
+		)
+		FetchContent_MakeAvailable(arbitrary_integer)
+	endif()
+endif()
+
 if(RATIONAL_NUMBER_BUILD_EXAMPLE)
 	add_subdirectory(example)
 endif()
