@@ -214,3 +214,14 @@ TEST(RationalNumberTests, BigArithmetic) {
 	EXPECT_EQ(Fraction(0, -large), Fraction(0));
 }
 
+TEST(RationalNumberTests, BigApproximation) {
+	typedef RationalNumber<ArbitraryInteger> Fraction;
+	ArbitraryInteger large("1" + std::string(400, '0'));
+	Fraction close(large + 1, large - 1);
+	EXPECT_NEAR(close.getDoubleApprox(), 1.0, 1e-14);
+	EXPECT_NEAR(Fraction(-large, large * 3 + 1).getDoubleApprox(), -1.0 / 3.0, 1e-14);
+	EXPECT_TRUE(std::isinf(Fraction(large).getDoubleApprox()));
+	EXPECT_EQ(Fraction(1, large).getDoubleApprox(), 0.0);
+	EXPECT_EQ(Fraction(0).getDoubleApprox(), 0.0);
+}
+
