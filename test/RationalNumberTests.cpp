@@ -247,3 +247,18 @@ TEST(RationalNumberTests, BigMixedIntegers) {
 	EXPECT_EQ(--value, Fraction(2));
 }
 
+TEST(RationalNumberTests, BigStreams) {
+	typedef RationalNumber<ArbitraryInteger> Fraction;
+	std::istringstream in("123456789012345678901234567890/7");
+	Fraction value;
+	in >> value;
+	EXPECT_FALSE(in.fail());
+	EXPECT_EQ(value, Fraction(ArbitraryInteger("123456789012345678901234567890"), 7));
+	std::ostringstream out;
+	out << value;
+	std::istringstream again(out.str());
+	Fraction copy;
+	again >> copy;
+	EXPECT_EQ(copy, value);
+}
+
