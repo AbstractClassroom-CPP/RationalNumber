@@ -262,3 +262,12 @@ TEST(RationalNumberTests, BigStreams) {
 	EXPECT_EQ(copy, value);
 }
 
+TEST(RationalNumberTests, BigZeroDivisors) {
+	typedef RationalNumber<ArbitraryInteger> Fraction;
+	Fraction value(7, 9);
+	EXPECT_THROW(value /= 0, std::domain_error);
+	EXPECT_THROW(value %= 0, std::domain_error);
+	EXPECT_EQ(value, Fraction(7, 9));
+	EXPECT_THROW(Fraction(1, 0), std::domain_error);
+}
+
