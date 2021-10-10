@@ -31,3 +31,4 @@ Tests use GoogleTest 1.10.0. Tests and examples fetch ArbitraryInteger v3.0.0.
 Fetch a version with CMake `FetchContent`, link `RationalNumber::RationalNumber`, and include `RationalNumber.hpp`.
 Also link `ArbitraryInteger::ArbitraryInteger` when using that backend.
 Use `-DBUILD_TESTING=OFF` and `-DRATIONAL_NUMBER_BUILD_EXAMPLE=OFF` for a library-only build.
+Stream input accepts an integer or an `n/d` token without internal whitespace.
