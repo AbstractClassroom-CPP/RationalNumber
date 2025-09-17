@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(RationalNumber VERSION 4.0.0 LANGUAGES CXX)
+project(RationalNumber VERSION 4.0.1 LANGUAGES CXX)
 
 add_library(rational_number src/RationalNumber.cpp)
 add_library(RationalNumber::RationalNumber ALIAS rational_number)

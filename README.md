@@ -12,6 +12,7 @@ Access values with `getNumerator()`, `getDenominator()`, `isZero()`, `isInteger(
 | `v2.0.0` | Multiplication, division, remainder, and unary signs |
 | `v3.0.0` | Increment, decrement, and stream operators |
 | `v4.0.0` | Templates for `int` or `ArbitraryInteger`, with GoogleTest |
+| `v4.0.1` | GitHub Actions unit tests |
 
 Zero denominators and division by zero throw `std::domain_error`. Results outside `int` storage throw `std::overflow_error`.
 Remainder uses a quotient truncated toward zero. Bitwise operations are not defined for fractions.
@@ -27,6 +28,7 @@ ctest --output-on-failure
 ```
 
 Tests use GoogleTest 1.10.0. Tests and examples fetch ArbitraryInteger v3.0.0.
+For CMake 4, add `-DCMAKE_POLICY_VERSION_MINIMUM=3.5` when configuring.
 
 Fetch a version with CMake `FetchContent`, link `RationalNumber::RationalNumber`, and include `RationalNumber.hpp`.
 Also link `ArbitraryInteger::ArbitraryInteger` when using that backend.
