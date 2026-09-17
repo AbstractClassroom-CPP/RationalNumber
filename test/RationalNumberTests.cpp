@@ -271,3 +271,36 @@ TEST(RationalNumberTests, BigZeroDivisors) {
 	EXPECT_THROW(Fraction(1, 0), std::domain_error);
 }
 
+TEST(RationalNumberTests, Powers) {
+	const RationalNumber<int> value(2, 3);
+	EXPECT_EQ(value.power(0), RationalNumber<int>(1));
+	EXPECT_EQ(value.power(5), RationalNumber<int>(32, 243));
+	EXPECT_EQ(value.power(-3), RationalNumber<int>(27, 8));
+	EXPECT_EQ(value, RationalNumber<int>(2, 3));
+	EXPECT_EQ(RationalNumber<int>(-2, 3).power(3), RationalNumber<int>(-8, 27));
+	EXPECT_EQ(RationalNumber<int>(-2, 3).power(4), RationalNumber<int>(16, 81));
+	EXPECT_EQ(RationalNumber<int>(0).power(0), RationalNumber<int>(1));
+	EXPECT_EQ(RationalNumber<int>(0).power(9), RationalNumber<int>(0));
+	EXPECT_THROW(RationalNumber<int>(0).power(-1), std::domain_error);
+}
+
+TEST(RationalNumberTests, PowerLimits) {
+	EXPECT_EQ(RationalNumber<int>(-1).power(INT_MIN), RationalNumber<int>(1));
+	EXPECT_EQ(RationalNumber<int>(-1).power(INT_MAX), RationalNumber<int>(-1));
+	EXPECT_EQ(RationalNumber<int>(1).power(INT_MIN), RationalNumber<int>(1));
+	EXPECT_EQ(RationalNumber<int>(INT_MAX).power(1), RationalNumber<int>(INT_MAX));
+	EXPECT_EQ(RationalNumber<int>(-2).power(31), RationalNumber<int>(INT_MIN));
+	EXPECT_THROW(RationalNumber<int>(2).power(31), std::overflow_error);
+	EXPECT_THROW(RationalNumber<int>(1, 2).power(31), std::overflow_error);
+}
+
+TEST(RationalNumberTests, BigPowers) {
+	typedef RationalNumber<ArbitraryInteger> Fraction;
+	Fraction value(2, 3);
+	EXPECT_EQ(value.power(40), Fraction(ArbitraryInteger("1099511627776"), ArbitraryInteger("12157665459056928801")));
+	EXPECT_EQ(value.power(-40) * value.power(40), Fraction(1));
+	EXPECT_EQ(Fraction(-1).power(INT_MIN), Fraction(1));
+	EXPECT_THROW(Fraction(0).power(-1), std::domain_error);
+	EXPECT_EQ(Fraction(0).power(0), Fraction(1));
+}
+

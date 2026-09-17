@@ -148,6 +148,26 @@ public:
 		return previous;
 	}
 
+	RationalNumber power(int exponent) const {
+		RationalNumber result(1);
+		RationalNumber factor = *this;
+		unsigned int remaining = static_cast<unsigned int>(exponent);
+		if (exponent < 0) {
+			factor.setValues(Wide(denominator_), Wide(numerator_));
+			remaining = 0U - remaining;
+		}
+		while (remaining > 0) {
+			if (remaining % 2 == 1) {
+				result *= factor;
+			}
+			remaining /= 2;
+			if (remaining > 0) {
+				factor *= factor;
+			}
+		}
+		return result;
+	}
+
 
 	friend RationalNumber operator+(RationalNumber left, const RationalNumber& right) {
 		left += right;

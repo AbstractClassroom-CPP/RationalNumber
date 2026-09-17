@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(RationalNumber VERSION 4.0.1 LANGUAGES CXX)
+project(RationalNumber VERSION 5.0.0 LANGUAGES CXX)
 
 add_library(rational_number src/RationalNumber.cpp)
 add_library(RationalNumber::RationalNumber ALIAS rational_number)
@@ -18,7 +18,7 @@ endif()
 
 option(RATIONAL_NUMBER_BUILD_EXAMPLE "Build the examples" ${rational_number_top_level})
 
-if((rational_number_top_level AND BUILD_TESTING))
+if((rational_number_top_level AND BUILD_TESTING) OR RATIONAL_NUMBER_BUILD_EXAMPLE)
 	if(NOT TARGET ArbitraryInteger::ArbitraryInteger)
 		include(FetchContent)
 		FetchContent_Declare(arbitrary_integer

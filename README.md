@@ -13,6 +13,9 @@ Access values with `getNumerator()`, `getDenominator()`, `isZero()`, `isInteger(
 | `v3.0.0` | Increment, decrement, and stream operators |
 | `v4.0.0` | Templates for `int` or `ArbitraryInteger`, with GoogleTest |
 | `v4.0.1` | GitHub Actions unit tests |
+| `v5.0.0` | Powers by successive squaring and a backend example |
+
+`power(int)` supports negative exponents by taking the reciprocal, with `power(0)` returning one. Zero to a negative power is invalid.
 
 Zero denominators and division by zero throw `std::domain_error`. Results outside `int` storage throw `std::overflow_error`.
 Remainder uses a quotient truncated toward zero. Bitwise operations are not defined for fractions.
